@@ -1,0 +1,36 @@
+dependencies {
+    compile project(':fanap-ws-client')
+    compile project(':shaparak-totan-model')
+    compile('org.springframework.boot:spring-boot-starter-jdbc:1.2.1.RELEASE')
+    compile('mysql:mysql-connector-java:5.1.34')
+    compile('org.springframework.boot:spring-boot-starter-batch:1.2.1.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter-integration:1.2.1.RELEASE')
+    compile('org.springframework.batch:spring-batch-integration:3.0.2.RELEASE')
+    compile('org.springframework.integration:spring-integration-event:4.1.1.RELEASE')
+    compile group: 'com.pardazeshgaran.jalaliCalendar', name: 'jalaliCalendar', version: '1.0.2'
+
+    testCompile 'junit:junit:4.12'
+}
+
+apply plugin: 'application'
+mainClassName = 'Application'
+
+
+publishing {
+    repositories {
+        maven() {
+            credentials {
+                username project.nexus_user
+                password project.nexus_pass
+            }
+            url "http://bamzy-server/nexus/content/repositories/test/"
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+
+            artifact distTar { classifier 'dist' }
+        }
+    }
+}

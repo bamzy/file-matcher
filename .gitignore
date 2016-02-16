@@ -1,0 +1,9 @@
+syntax: glob
+
+.gradle/*
+.idea/*
+build/*
+data/
+totan-data/
+*.orig
+*.iml

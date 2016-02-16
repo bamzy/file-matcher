@@ -1,0 +1,34 @@
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+    apply plugin: 'idea'
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    group = 'com.bamzy.matcher'
+    version = '1.0.0'
+    compileJava.options.encoding = 'UTF-8'
+    apply from: "$rootDir/gradle/ci.gradle"
+
+    apply plugin: 'maven-publish'
+    publishing {
+        repositories {
+            maven() {
+                credentials {
+                    username project.nexus_user
+                    password project.nexus_pass
+                }
+//                url "http://bamzy-server/nexus/content/repositories/releases/"
+            }
+        }
+
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+}
